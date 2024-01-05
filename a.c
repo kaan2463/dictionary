@@ -51,7 +51,7 @@ typedef struct linkedNode{
     struct linkedNode * next;
 }linkedNode;
 
-linkedNode * createLinkedList(char * data){
+linkedNode * createLink(char * data){
     linkedNode * node = (linkedNode*)malloc(sizeof(linkedNode));
     node->data = data;
     node->next = NULL;
@@ -59,7 +59,7 @@ linkedNode * createLinkedList(char * data){
 
 
 typedef struct trieNode{
-    char * description;
+    linkedNode * description;
     struct trieNode * nodes[NUMBER_OF_LETTER]; 
 }trieNode;
 
@@ -79,7 +79,13 @@ void appendNode(trieNode * node, char * key, char * description){
     }
 
     if(*key == '\0'){
-        node->description = description;
+        if(node->description == NULL){
+            node->description = createLink(description);
+        } else {
+            linkedNode * link = createLink(description);
+            link->next = node->description;
+            node->description = link;
+        }
         return;
     }
 
@@ -91,7 +97,7 @@ void appendNode(trieNode * node, char * key, char * description){
 
 }
 
-char * findDescription(trieNode * node, char * key){
+linkedNode * findDescription(trieNode * node, char * key){
     if(node == NULL || key == NULL){
         return NULL;
     }
@@ -100,10 +106,19 @@ char * findDescription(trieNode * node, char * key){
     if(*key == '\0'){
         return node->description;
     }
-    
-    printf("%c %d\n", *key, getIndex(*key));
 
     return findDescription(node->nodes[getIndex(*key)], key+1);
+}
+
+void printLink(linkedNode * head){
+    
+    if(head == NULL){
+        return;
+    }
+
+    printLink(head->next);
+
+    printf("%s\n", head->data);
 }
 
 
@@ -127,18 +142,22 @@ int main(int argc, char ** argv){
 
     sz = getline(&line, &len, fp);
     int lineNum = 1;
+    printf("Database is loading .");
     while(sz != -1) {
-        printf("%d %ld ",lineNum ,sz);
 
         key = strtok(line,"@");
         buffer=(char*)malloc(sizeof(char)*sz);
         char * des = strtok(NULL,"@");
         strcpy(buffer, des);
-        printf("%p %s %s\n", buffer, key, des);
         appendNode(head, key, buffer);
         sz = getline(&line, &len, fp);
+        if(lineNum % 10000 == 0){
+            printf(".");
+        }
         lineNum++;
     }
+
+    printf("\n\n%d words has been read!\n\n", lineNum);
 
     fclose(fp);
     free(line);
@@ -147,13 +166,15 @@ int main(int argc, char ** argv){
 
     while(1){
         scanf("%s", word);
-        printf("%s: ", word);
-        char * found = findDescription(head, word);
+        printf("---------------------------------------------------------\n");
+        printf("%s:\n\n", word);
+        linkedNode * found = findDescription(head, word);
         if(found == NULL){
-            printf("NOT FOUND \n");
+            printf("NOT FOUND!\n");
         } else{
-            printf("%s \n", found);
+            printLink(found);
         }
+        printf("---------------------------------------------------------\n");
     }
 
     return 0;
