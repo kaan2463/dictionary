@@ -1,14 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../header/dictionary.h"
 
-#define NUMBER_OF_LETTER 32
-#define SPACE_INDEX 26
-#define DASH_INDEX 27
-#define APPOSTOPE_INDEX 28
-#define SLASH_INDEX 29
-#define BACK_SLASH_INDEX 30
-#define DOT_INDEX 31
 
 int getIndex(char c){
     if(c == ' '){
@@ -43,25 +37,12 @@ int getIndex(char c){
     return (int)(c-'a');
 }
 
-char alphabet[NUMBER_OF_LETTER] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',' ', '-', '\'', '/', '\\', '.'};
-
-
-typedef struct linkedNode{
-    char * data;
-    struct linkedNode * next;
-}linkedNode;
-
 linkedNode * createLink(char * data){
     linkedNode * node = (linkedNode*)malloc(sizeof(linkedNode));
     node->data = data;
     node->next = NULL;
 }
 
-
-typedef struct trieNode{
-    linkedNode * description;
-    struct trieNode * nodes[NUMBER_OF_LETTER]; 
-}trieNode;
 
 trieNode * createNode(){
     trieNode * node = (trieNode*) malloc(sizeof(trieNode)); 
@@ -126,7 +107,7 @@ int main(int argc, char ** argv){
 
     trieNode * head = createNode();
 
-    FILE *fp = fopen("data.txt", "r");
+    FILE *fp = fopen("../../resource/data.txt", "r");
     if(fp == NULL) {
         perror("Unable to open file!");
         exit(1);
