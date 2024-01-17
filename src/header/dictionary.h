@@ -12,11 +12,13 @@
 char alphabet[NUMBER_OF_LETTER] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',' ', '-', '\'', '/', '\\', '.'};
 
 typedef struct linkedNode{
+    int data_size;
     char * data;
     struct linkedNode * next;
 }linkedNode;
 
 typedef struct trieNode{
+
     linkedNode * description;
     struct trieNode * nodes[NUMBER_OF_LETTER]; 
 }trieNode;
@@ -27,4 +29,5 @@ trieNode * createNode();
 void appendNode(trieNode * node, char * key, char * description);
 linkedNode * findDescription(trieNode * node, char * key);
 void printLink(linkedNode * head);
+trieNode * createDictionary(const char * file_path);
 #endif

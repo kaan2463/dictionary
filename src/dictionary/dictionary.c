@@ -40,6 +40,7 @@ int getIndex(char c){
 linkedNode * createLink(char * data){
     linkedNode * node = (linkedNode*)malloc(sizeof(linkedNode));
     node->data = data;
+    node->data_size = strlen(data);
     node->next = NULL;
 }
 
@@ -99,15 +100,14 @@ void printLink(linkedNode * head){
 
     printLink(head->next);
 
-    printf("%s\n", head->data);
+    printf("%d: %s\n",head->data_size, head->data);
 }
 
 
-int main(int argc, char ** argv){
-
+trieNode * createDictionary(const char * file_path){
     trieNode * head = createNode();
 
-    FILE *fp = fopen("../../resource/data.txt", "r");
+    FILE *fp = fopen(file_path, "r");
     if(fp == NULL) {
         perror("Unable to open file!");
         exit(1);
@@ -142,6 +142,14 @@ int main(int argc, char ** argv){
 
     fclose(fp);
     free(line);
+
+    return head;
+}
+
+
+int main(int argc, char ** argv){
+    
+    trieNode * head = createDictionary("../../resource/data.txt");
 
     char word[50];
 
