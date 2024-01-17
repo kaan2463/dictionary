@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "../header/dictionary.h"
 
 
@@ -42,6 +39,7 @@ linkedNode * createLink(char * data){
     node->data = data;
     node->data_size = strlen(data);
     node->next = NULL;
+    return node;
 }
 
 
@@ -56,7 +54,7 @@ trieNode * createNode(){
 }
 
 void appendNode(trieNode * node, char * key, char * description){
-    if(key == NULL || description == NULL | node == NULL){
+    if(key == NULL || description == NULL || node == NULL){
         return;
     }
 
@@ -146,25 +144,3 @@ trieNode * createDictionary(const char * file_path){
     return head;
 }
 
-
-int main(int argc, char ** argv){
-    
-    trieNode * head = createDictionary("../../resource/data.txt");
-
-    char word[50];
-
-    while(1){
-        scanf("%s", word);
-        printf("---------------------------------------------------------\n");
-        printf("%s:\n\n", word);
-        linkedNode * found = findDescription(head, word);
-        if(found == NULL){
-            printf("NOT FOUND!\n");
-        } else{
-            printLink(found);
-        }
-        printf("---------------------------------------------------------\n");
-    }
-
-    return 0;
-}

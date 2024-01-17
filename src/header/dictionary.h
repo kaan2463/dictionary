@@ -1,6 +1,12 @@
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
 
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
 #define NUMBER_OF_LETTER 32
 #define SPACE_INDEX 26
 #define DASH_INDEX 27
@@ -9,7 +15,7 @@
 #define BACK_SLASH_INDEX 30
 #define DOT_INDEX 31
 
-char alphabet[NUMBER_OF_LETTER] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',' ', '-', '\'', '/', '\\', '.'};
+// char alphabet[NUMBER_OF_LETTER] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',' ', '-', '\'', '/', '\\', '.'};
 
 typedef struct linkedNode{
     int data_size;
