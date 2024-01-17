@@ -3,8 +3,15 @@
 #define FILE_LOCATION "../resource/data.txt"
 
 int main(int argc, char ** argv){
+
+    trieNode * head;
     
-    trieNode * head = createDictionary(FILE_LOCATION);
+    if(argc>1){
+        head = createDictionary(argv[1]);
+    } else{
+        head = createDictionary(FILE_LOCATION);
+    }
+
 
     char word[50];
 
