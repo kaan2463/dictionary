@@ -1,4 +1,5 @@
 #include "header/dictionary.h"
+#include "header/io.h"
 
 #define FILE_LOCATION "../resource/data.txt"
 
@@ -23,7 +24,10 @@ int main(int argc, char ** argv){
         if(found == NULL){
             printf("NOT FOUND!\n");
         } else{
-            printLink(found);
+            char * desc = linkToStr(found, 0);
+
+            printf("%s\n", desc);
+            free(desc);
         }
         printf("---------------------------------------------------------\n");
     }

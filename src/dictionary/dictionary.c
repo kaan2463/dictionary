@@ -1,7 +1,7 @@
 #include "../header/dictionary.h"
 
 
-int getIndex(char c){
+int indexMatch(char c){
     if(c == ' '){
         return SPACE_INDEX;
     }
@@ -26,12 +26,33 @@ int getIndex(char c){
         return DOT_INDEX;
     }
 
+    if(c == '('){
+        return BRA_INDEX;
+    }
+
+    if(c == ')'){
+        return KET_INDEX;
+    }
+
+    if(c == '#'){
+        return SHARP_INDEX;
+    }
+
 
     if(c>='A' && c<='Z'){
         return (int)(c-'A');
     }
 
     return (int)(c-'a');
+}
+
+int getIndex(char c){
+    int index = indexMatch(c);
+    if(index<0 || NUMBER_OF_LETTER-1<index){
+        printf("ERROR: char:%c\n", c);
+        exit(-1);
+    }
+    return index;
 }
 
 linkedNode * createLink(char * data){
@@ -46,6 +67,7 @@ linkedNode * createLink(char * data){
 trieNode * createNode(){
     trieNode * node = (trieNode*) malloc(sizeof(trieNode)); 
     node->description = NULL;
+    node->tail = NULL;
     for(int i=0;i<NUMBER_OF_LETTER;i++){
         node->nodes[i] = NULL;
     }
@@ -61,10 +83,10 @@ void appendNode(trieNode * node, char * key, char * description){
     if(*key == '\0'){
         if(node->description == NULL){
             node->description = createLink(description);
+            node->tail = node->description;
         } else {
-            linkedNode * link = createLink(description);
-            link->next = node->description;
-            node->description = link;
+            node->tail->next = createLink(description);
+            node->tail = node->tail->next;
         }
         return;
     }
@@ -101,6 +123,21 @@ void printLink(linkedNode * head){
     printf("%d: %s\n",head->data_size, head->data);
 }
 
+char * linkToStr(linkedNode * head, int num){
+    
+    if(head == NULL){
+        
+        char * str = (char*)malloc((num+1)*sizeof(char));
+        str[num] = '\0';
+        return str;
+    }
+
+    char * description = linkToStr(head->next, num + head->data_size);
+    memcpy(description + num, head->data, head->data_size);
+
+    return description;
+
+}
 
 trieNode * createDictionary(const char * file_path){
     trieNode * head = createNode();
