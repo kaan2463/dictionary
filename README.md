@@ -5,10 +5,8 @@
 ## DONE
 - Header files are added.
 - An example TCP server code is added.
-
-## TODO
-- Makefile will be added
-- Socket codes will be arranged.
-- Thread scructure will be apply to response each request in an thread
+- Makefile is added
+- Socket codes is arranged.
+- Thread scructure is applied to response each request in an thread
 
 
