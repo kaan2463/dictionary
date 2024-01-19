@@ -38,6 +38,6 @@ trieNode * createNode();
 void appendNode(trieNode * node, char * key, char * description);
 linkedNode * findDescription(trieNode * node, char * key);
 void printLink(linkedNode * head);
-char * linkToStr(linkedNode * head, int num);
+char * linkToStr(linkedNode * head, int *num);
 trieNode * createDictionary(const char * file_path);
 #endif

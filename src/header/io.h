@@ -12,18 +12,13 @@
 
 #define PORT 1920
 #define BACKLOG 3
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 2048
 
-//A default adapter strategy function. (get input and move to output as a default)
-void default_callback(char * input, char * output, ssize_t i_sz, ssize_t *o_sz)
-{
-    strcpy(output, input);
-    *o_sz = i_sz;
-}
+
+void default_callback(char * input, char * output, ssize_t i_sz, ssize_t *o_sz);
+
 //Definition for callback function type.
 typedef void(*IOFUNC)(char *, char *, ssize_t, ssize_t*);
-//An adapter function, can be used to inject input-output strategy.
-IOFUNC ADAPTER = default_callback;
 
 //Helper function, checks functions have error.
 void check(int val, char * errorMsg);

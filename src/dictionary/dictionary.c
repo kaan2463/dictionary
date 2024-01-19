@@ -1,6 +1,5 @@
 #include "../header/dictionary.h"
 
-
 int indexMatch(char c){
     if(c == ' '){
         return SPACE_INDEX;
@@ -123,17 +122,18 @@ void printLink(linkedNode * head){
     printf("%d: %s\n",head->data_size, head->data);
 }
 
-char * linkToStr(linkedNode * head, int num){
+char * linkToStr(linkedNode * head, int *num){
     
     if(head == NULL){
-        
-        char * str = (char*)malloc((num+1)*sizeof(char));
-        str[num] = '\0';
+        char * str = (char*)malloc((*num+1)*sizeof(char));
+        str[*num] = '\0';
         return str;
     }
 
-    char * description = linkToStr(head->next, num + head->data_size);
-    memcpy(description + num, head->data, head->data_size);
+    int stackNum = *num;
+    *num = *num + head->data_size;
+    char * description = linkToStr(head->next, num);
+    memcpy(description + stackNum, head->data, head->data_size);
 
     return description;
 

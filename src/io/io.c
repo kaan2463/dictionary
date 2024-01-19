@@ -1,5 +1,16 @@
 #include "../header/io.h"
 
+//An adapter function, can be used to inject input-output strategy.
+IOFUNC ADAPTER = default_callback;
+
+
+//A default adapter strategy function. (get input and move to output as a default)
+void default_callback(char * input, char * output, ssize_t i_sz, ssize_t *o_sz)
+{
+    strcpy(output, input);
+    *o_sz = i_sz;
+}
+
 void check(int val, char * errorMsg){
     if(val<0){
         printf("ERROR: %s failed!\n", errorMsg);
